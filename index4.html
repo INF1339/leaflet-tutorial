@@ -1,0 +1,77 @@
+<head>
+    <title>Version 0.4</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+   integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+   crossorigin=""></script>
+<style>
+#map { height: 600px; width: 600px;  background-color: black; margin: auto;}
+    .leaflet-control-locate {
+        border: 1px solid rgba(0,0,0,0.4);}
+ .leaflet-control-locate a {
+        background-color: #fff;
+        background-position: -3px, -2px;}
+ .leaflet-control-locate.active a {
+        background-position: -33px -2px;}
+</style>
+</head>
+ 
+<body>
+<h3>Version 0.4</h3>
+ 
+<div id="map"></div>
+<script>
+ var map = L.map('map').setView([43.664428, -79.399447], 16);
+
+ L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+     attribution: 'Map data &copy; <a href="http://openstreetmap.org"> OpenStreetMap </a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/"> CC-BY-SA </a>, Imagery <a href="http://openstreetmap.org"> OpenStreetMap </a> contributors',
+     maxZoom: 18
+ }).addTo(map);
+
+var circle = L.circle([43.664428, -79.399447], 200, {
+    color: 'red',
+    fillColor: '#f03',
+    fillOpacity: 0.5
+}).addTo(map); 
+
+var polygon = L.polygon([
+    [43.664858, -79.399427],
+    [43.664819, -79.399357],
+    [43.664897, -79.399278],
+    [43.664877, -79.399137],
+    [43.664949, -79.399054],
+    [43.665114, -79.399124],
+    [43.665176, -79.399449],
+    [43.665032, -79.399621],
+    [43.664970, -79.399583],
+    [43.664932, -79.399478]
+], {
+    color: 'blue',
+    fillColor: '#dd3',
+    fillOpacity: 0.5
+}).addTo(map);
+
+var marker = L.marker([43.664428, -79.38]).addTo(map);
+    
+    marker.bindPopup("<h4>Marker Info</h4>Here is all you need to know.").openPopup();
+circle.bindPopup("This is where we are, in general.");
+polygon.bindPopup("This is our building.");
+    
+    var popup = L.popup();
+
+function onMapClick(e) {
+    popup
+        .setLatLng(e.latlng)
+        .setContent("You clicked the map at " + e.latlng.toString())
+        .openOn(map);
+}
+
+map.on('click', onMapClick);
+    
+
+</script>
+   
+ 
+</body>
